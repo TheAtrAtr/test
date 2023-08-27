@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'org.example'
@@ -21,4 +22,8 @@ test {
 }
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
+}
+application {
+    // Define the main class for the application.
+    mainClassName = 'Main'
 }

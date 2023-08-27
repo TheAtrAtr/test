@@ -20,7 +20,9 @@ public class Flights {
     private int stops;
     private int price;
 
-    public Flights(String origin, String origin_name, String destination, String destination_name, LocalDate departure_date, LocalTime departure_time, LocalDate arrival_date, LocalTime arrival_time, String carrier, int stops, int price) {
+    public Flights(String origin, String origin_name, String destination, String destination_name,
+                   LocalDate departure_date, LocalTime departure_time, LocalDate arrival_date,
+                   LocalTime arrival_time, String carrier, int stops, int price) {
         this.origin = origin;
         this.origin_name = origin_name;
         this.destination = destination;
