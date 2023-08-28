@@ -2,10 +2,14 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -13,14 +17,19 @@ import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) throws IOException, URISyntaxException {
-        //Получаем ссылку на файл с исходными данными
-        var uri = Objects.requireNonNull(Main.class.getResource(String.format("/%s", "tickets.json"))).toURI();
+        //Получаем поток с данными из файла в папке resources
+        InputStream is = Main.class.getResourceAsStream("/tickets.json");
 
-        //Читаем файл с данными
-        String bodyFile = Files.readString(Path.of(uri));
+        //Копируем поток во временный файл
+        Path tempFile =
+                Files.createTempDirectory("").resolve(UUID.randomUUID().toString() + ".tmp");
+        Files.copy(is, tempFile, StandardCopyOption.REPLACE_EXISTING);
+
+        //Читаем данные из временного файла в строку
+        String bodyFile = Files.readString(Path.of(tempFile.toUri()));
 
         //Файл содержит символ не соответствующий спецификации json, удаляем этот символ
-        String formattedString = bodyFile.trim().replaceAll("\ufeff", "");
+        String formattedString = bodyFile.toString().trim().replaceAll("\ufeff", "");
 
         //Парсим json
         ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
