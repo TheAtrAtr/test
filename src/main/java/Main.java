@@ -57,7 +57,7 @@ public class Main {
                         //Время вылета из Владивостока (по Владивостокскому времени)
                         LocalDateTime departure = LocalDateTime.of(c.getDeparture_date(), c.getDeparture_time());
                         //Время вылета из Владивостока (по Тель-Авивскому времени)
-                        LocalDateTime departureTelAvivLocale = departure.minus(17, ChronoUnit.HOURS);
+                        LocalDateTime departureTelAvivLocale = departure.minus(7, ChronoUnit.HOURS);
                         //Время прибытия в Тель-Авив (по Тель-Авивскому времени)
                         LocalDateTime arrival = LocalDateTime.of(c.getArrival_date(), c.getArrival_time());
                         //Возвращаем разницу между вылетом и прилётом в минутах по Тель-Авивскому времени
